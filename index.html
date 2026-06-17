@@ -81,9 +81,21 @@ body{font-family:'Noto Sans KR',sans-serif;background:#F9FAFB;color:#111827}
   .quiz-card{padding:28px 24px !important}
   .opts-grid{grid-template-columns:1fr !important}
 
+  /* NAV 탭 줄바꿈 방지 */
+  #nav-tabs{overflow-x:auto;-webkit-overflow-scrolling:touch;flex-shrink:1}
+
+  /* HOME 히어로 h1: 40px 최솟값 → 28px */
+  .home-hero h1{font-size:clamp(28px,7.5vw,40px) !important}
+  /* HOME 히어로 서브텍스트 */
+  .home-hero p{font-size:15px !important}
+
+  /* INTERVIEW Q&A 들여쓰기 제거 */
+  .qa-body{padding-left:0 !important}
+
   /* RESULT ─ 1컬럼 */
   .result-grid{grid-template-columns:1fr !important}
   .result-card{padding:32px 28px !important}
+  .result-bar-wrap{padding:28px 24px !important}
 }
 </style>
 </head>
@@ -437,7 +449,7 @@ function interviewHTML(){
         </div>
         <h4 style="font-size:17px;font-weight:800;line-height:1.55;letter-spacing:-.02em">${qa.q}</h4>
       </div>
-      <div style="padding-left:44px">${ans}</div>
+      <div class="qa-body" style="padding-left:44px">${ans}</div>
     </div>`;
   }).join('');
 
@@ -599,7 +611,7 @@ function quizResultHTML(){
       </div>
 
       <!-- RIGHT: bar chart -->
-      <div style="background:#fff;border-radius:24px;padding:44px 40px;border:1px solid #F3F4F6;display:flex;flex-direction:column;justify-content:center">
+      <div class="result-bar-wrap" style="background:#fff;border-radius:24px;padding:44px 40px;border:1px solid #F3F4F6;display:flex;flex-direction:column;justify-content:center">
         <p style="font-size:12px;font-weight:700;color:#9CA3AF;letter-spacing:.08em;margin-bottom:28px">직군 적합도 분석</p>
         ${bars}
       </div>
