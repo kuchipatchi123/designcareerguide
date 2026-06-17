@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>디자이너 커리어 가이드</title>
+<script>
+  tailwind = {config:{theme:{extend:{fontFamily:{sans:["'Noto Sans KR'",'sans-serif']}}}}}
+</script>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Noto Sans KR',sans-serif;background:#F9FAFB;color:#111827}
+:root{--blue:#0064FF;--blue-light:#EEF5FF;--W:1200px;--PX:60px}
+.nav-btn{padding:8px 16px;border-radius:100px;font-size:13px;font-weight:500;color:#9CA3AF;background:transparent;border:none;cursor:pointer;transition:all .2s;font-family:inherit}
+.nav-btn.active{color:#fff;background:var(--blue);font-weight:700}
+.screen{display:none;animation:fadeUp .38s ease both}
+.screen.on{display:block}
+@keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+.card-hover{transition:transform .2s,box-shadow .2s;cursor:pointer}
+.card-hover:hover{transform:translateY(-4px);box-shadow:0 12px 36px rgba(0,0,0,.08)}
+.btn-primary{display:inline-flex;align-items:center;gap:10px;background:var(--blue);color:#fff;padding:16px 32px;border-radius:16px;font-size:16px;font-weight:700;border:none;cursor:pointer;font-family:inherit;transition:all .15s;letter-spacing:-.02em}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 10px 28px rgba(0,100,255,.35)}
+/* Quiz options — equal-height 2-column */
+.opts-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.opt-btn{display:flex;flex-direction:column;gap:14px;width:100%;padding:24px 26px;border-radius:20px;background:#fff;border:2px solid #F3F4F6;cursor:pointer;font-family:inherit;text-align:left;transition:all .2s;height:100%}
+.opt-btn:hover:not([disabled]){border-color:var(--blue);background:var(--blue-light)}
+.opt-btn.selected{border-color:var(--blue);background:var(--blue-light)}
+.opt-btn.dimmed{opacity:.35}
+.opt-label{width:34px;height:34px;border-radius:10px;background:#F3F4F6;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:12px;font-weight:800;color:#9CA3AF;transition:all .2s}
+.opt-btn.selected .opt-label{background:var(--blue);color:#fff}
+/* Interview sidebar tabs */
+.iv-tab{display:flex;align-items:center;gap:12px;width:100%;padding:14px 18px;border-radius:14px;border:none;background:transparent;font-size:14px;font-weight:500;color:#6B7280;cursor:pointer;transition:all .2s;font-family:inherit;text-align:left;border-left:3px solid transparent}
+.iv-tab:hover{background:#F3F4F6;color:#111827}
+.progress-track{height:6px;background:#F3F4F6;border-radius:100px;overflow:hidden}
+.progress-fill{height:100%;background:var(--blue);border-radius:100px;transition:width .45s cubic-bezier(.4,0,.2,1)}
+.blockquote{border-left:3px solid var(--blue);background:var(--blue-light);border-radius:0 14px 14px 0;padding:18px 24px;margin:20px 0;color:#1D4ED8;font-weight:500;line-height:1.85;font-size:14px}
+.interview-p{font-size:15px;color:#4B5563;line-height:1.95;margin-bottom:1.1rem}
+.interview-p strong{color:#111827;font-weight:700}
+/* ECO TABLE */
+.eco-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
+.eco-table{border-radius:20px;overflow:hidden;border:1px solid #F3F4F6;min-width:700px}
+.eco-row{display:grid;grid-template-columns:160px 1fr 1fr 1fr 1fr}
+.eco-attr{padding:22px 20px;display:flex;align-items:flex-start;border-right:1px solid #F3F4F6}
+.eco-cell{padding:20px 16px;border-right:1px solid #F3F4F6;font-size:13px}
+.eco-cell:last-child{border-right:none}
+.hide-scroll::-webkit-scrollbar{display:none}
+.hide-scroll{-ms-overflow-style:none;scrollbar-width:none}
+.bar-fill{height:100%;border-radius:100px;transition:width 1.1s cubic-bezier(.4,0,.2,1)}
+.wrap{max-width:var(--W);margin:0 auto;padding:0 var(--PX)}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav style="position:sticky;top:0;z-index:50;background:rgba(255,255,255,.92);backdrop-filter:blur(16px);border-bottom:1px solid #F3F4F6">
+  <div style="max-width:1200px;margin:0 auto;padding:0 60px;height:68px;display:flex;align-items:center;justify-content:space-between">
+    <div style="display:flex;align-items:center;gap:10px;cursor:pointer" onclick="go('home')">
+      <div style="width:28px;height:28px;background:var(--blue);border-radius:8px;display:flex;align-items:center;justify-content:center">
+        <span style="font-size:13px;color:#fff;font-weight:900">D</span>
+      </div>
+      <span style="font-weight:900;font-size:16px;letter-spacing:-.03em">디자이너 커리어 가이드</span>
+    </div>
+    <div style="display:flex;gap:4px" id="nav-tabs">
+      <button class="nav-btn active" data-tab="home" onclick="go('home')">홈</button>
+      <button class="nav-btn" data-tab="eco" onclick="go('eco')">직군 비교</button>
+      <button class="nav-btn" data-tab="interview" onclick="go('interview')">인터뷰</button>
+      <button class="nav-btn" data-tab="quiz" onclick="go('quiz')">성향 테스트</button>
+    </div>
+  </div>
+</nav>
+
+<!-- SCREENS -->
+<div id="s-home" class="screen"></div>
+<div id="s-eco" class="screen"></div>
+<div id="s-interview" class="screen"></div>
+<div id="s-quiz" class="screen"></div>
+
+<script>
+// ───────────────────────────────────────────
+// DATA
+// ───────────────────────────────────────────
+const G = {
+  studio:{name:'개인 스튜디오',tag:'소규모 에이전시 · 스튜디오',icon:'🎨',hex:'#7C3AED',light:'#F5F3FF',
+    desc:'자립하는 디자이너의 공간.\n처음부터 끝까지, 내 손으로.',
+    result:'당신은 자신만의 시각 언어와 철학으로 세상과 소통하는 자립형 디자이너입니다. 소규모 독립 스튜디오에서 전 과정을 직접 책임지며 압축 성장하는 환경이 최적입니다.',
+    tips:['포트폴리오에 자신의 철학과 취향이 드러나는 작업을 담으세요','클라이언트 핸들링 경험을 쌓는 것이 핵심 경쟁력입니다','프로젝트 전 과정을 경험할 수 있는 소규모 에이전시에 집중하세요']},
+  cj:{name:'CJ/CGV',tag:'대기업 문화콘텐츠',icon:'🎬',hex:'#EA580C',light:'#FFF7ED',
+    desc:'트렌드 최전선의 문화 기업.\n대형 프로젝트를 함께 기획한다.',
+    result:'당신은 다양한 이해관계자와 원활하게 소통하며 대형 프로젝트를 기획하고 조율하는 협업형 디자이너입니다. 외부 파트너들과 함께하는 대규모 콘텐츠 환경에서 강점을 발휘합니다.',
+    tips:['문제 해결 과정이 명확히 보이는 포트폴리오를 준비하세요','다양한 협업 프로젝트 경험을 적극 어필하세요','유연한 수용성과 자기 페이스 조절 능력을 기르세요']},
+  house:{name:'오늘의집',tag:'IT 플랫폼 스타트업',icon:'🏠',hex:'#059669',light:'#ECFDF5',
+    desc:'데이터와 논리로 성장하는 팀.\n서비스 주도권이 최고의 보상.',
+    result:'당신은 비판적 사고와 데이터 기반 논리로 서비스의 핵심 문제를 정의하고 주도적으로 해결하는 유형입니다. IT 플랫폼 스타트업에서 빠른 이터레이션을 통해 성장합니다.',
+    tips:['실제 서비스 론칭과 데이터 기반 이터레이션 경험을 쌓으세요','비즈니스 관점의 문제 정의 능력을 어필하세요','"내가 이 기능을 주도했다"고 말할 수 있는 레퍼런스를 만드세요']},
+  samsung:{name:'삼성',tag:'글로벌 대기업 인하우스',icon:'💻',hex:'#1D4ED8',light:'#EFF6FF',
+    desc:'전 세계 수억 명과 함께하는 기업.\n대규모 프로젝트 전문가가 된다.',
+    result:'당신은 거대한 조직 시스템을 이해하고 설득력 있는 커뮤니케이션으로 의사결정을 이끌어내는 유형입니다. 글로벌 대규모 프로젝트 경험과 안정적인 커리어를 함께 추구합니다.',
+    tips:['정돈된 완성도와 보고 자료 제작 능력을 기르세요','삼성디자인멤버십 등 기업 연계 프로그램을 적극 활용하세요','영어 회화 실력을 실무 수준으로 끌어올리세요']}
+};
+const GKEYS = ['studio','cj','house','samsung'];
+
+const ECO = [
+  {attr:'핵심 요구 역량',
+   studio:['책임감 · 독립성','전체 프로세스 이해','클라이언트 핸들링'],
+   cj:['유연한 커뮤니케이션','협업 조율 능력','기획 · 문제해결력'],
+   house:['비판적 사고','데이터 기반 논리력','서비스 전체 조망력'],
+   samsung:['보고 자료 제작력','설득력 · 조직 파악','비주얼 완성도']},
+  {attr:'살아남기 좋은 성향',
+   studio:['자기 주도적','뚜렷한 취향 보유','변수에 유연'],
+   cj:['유연한 수용성','롱런 페이스 조절','소통 즐기는 협업형'],
+   house:['논리적 · 주도적','피드백 수용 성장형','적극적 소통'],
+   samsung:['조직 흐름 읽기','시스템 수용 마인드','안정 지향 · 영어 능통']},
+  {attr:'현실적인 명암',
+   studio:['초반 처우 불안정','빠른 압축 성장','자립 가능성 최고'],
+   cj:['의사결정 속도 완만','외부 변수 큰 영향','대형 포트폴리오 축적'],
+   house:['리더십 변동성 존재','맨땅 헤딩 문화','서비스 리딩 기록 획득'],
+   samsung:['보고 비중 70%+','조직 룰 수용 필요','업계 최고 처우']},
+  {attr:'예상 초봉 & 보상',
+   studio:['시장 가변적','(프로젝트 단위)'],
+   cj:['4,000만 원','초중반대'],
+   house:['4,000만 원','안팎'],
+   samsung:['6,000~8,000만 원','(성과급 포함)']}
+];
+
+const QUIZ = [
+  {q:'새로운 프로젝트를 시작할 때 나는?',opts:[
+    {t:'비즈니스 데이터와 유저의 진짜 문제를 파고든다',s:{house:1}},
+    {t:'내 취향과 철학이 담긴 독창적인 시각 언어를 고민한다',s:{studio:1}}]},
+  {q:'일할 때 내가 더 견디기 힘든 상황은?',opts:[
+    {t:'복잡한 결재 라인 때문에 의사결정이 느려지는 것',s:{house:1,studio:1}},
+    {t:'매뉴얼 없이 맨땅에 헤딩하며 시스템을 직접 짜야 하는 것',s:{samsung:1,cj:1}}]},
+  {q:"내가 생각하는 '디자이너의 진짜 책임감'이란?",opts:[
+    {t:'다양한 이해관계자와 원만하게 소통하며 조율해 내는 것',s:{cj:1,samsung:1}},
+    {t:'시간이 걸리더라도 완벽하게 사용 가능한 고퀄리티 결과물을 내는 것',s:{studio:1,house:1}}]},
+  {q:'조직에서 고속 승진하거나 인정받는 방법 중 더 끌리는 것은?',opts:[
+    {t:'조직 내 역학관계를 파악하고 훌륭한 보고자료로 임원진을 설득한다',s:{samsung:1}},
+    {t:'아무도 생각 못 한 서비스 개선 아이디어를 논리적으로 증명해 낸다',s:{house:1}}]},
+  {q:'선호하는 협업의 형태는?',opts:[
+    {t:'마케터, 대행사 등 수많은 직군과 함께하는 대형 협업',s:{cj:1}},
+    {t:'소수 정예로 킥오프부터 최종 아웃풋까지 전 과정을 밀도 있게 책임지기',s:{studio:1}}]},
+  {q:'포트폴리오에 남기고 싶은 기록은?',opts:[
+    {t:'"이 서비스 메인 기능은 내가 주도해서 고쳤다"는 확실한 리딩 기록',s:{house:1}},
+    {t:'전 세계 수억 명이 사용하는 대형 브랜드의 대규모 프로젝트 참여 기록',s:{samsung:1}}]},
+  {q:'직장에서 가장 중요하게 생각하는 보상은?',opts:[
+    {t:'높은 기본급과 성과급, 일과 삶의 균형이 지켜지는 인프라',s:{samsung:1}},
+    {t:'내 가치를 시장에서 증명할 수 있는 대체 불가능한 프로젝트 경험 자체',s:{studio:1}}]},
+  {q:'갑작스러운 수정 요청이 들어왔을 때 나는?',opts:[
+    {t:'"트렌드와 외부 변수 때문이겠지" 하고 유연하고 의연하게 받아들인다',s:{cj:1}},
+    {t:'논리적인 데이터와 근거가 없으면 납득하기 힘들다',s:{house:1}}]},
+  {q:'포트폴리오를 만들 때 더 신경 쓰는 부분은?',opts:[
+    {t:'트렌디한 비주얼 스타일과 완벽하게 정돈된 레이아웃',s:{studio:1}},
+    {t:'왜 시작했고 어떤 한계를 극복했는지 보여주는 문제 해결 여정',s:{cj:1}}]},
+  {q:'선호하는 조직 문화의 분위기는?',opts:[
+    {t:'격식과 체계가 잡혀 있고, 연령대가 다양해 서로 존중하는 분위기',s:{samsung:1,cj:1}},
+    {t:'수평적이고, 직급에 상관없이 치열하게 의견을 낼 수 있는 분위기',s:{house:1}}]}
+];
+
+const IV = {
+  studio:{
+    full:'개인 스튜디오 (Private Studio)',
+    sub:'자립하는 디자이너를 위한 안내서 : 단단한 세계를 짓는 법',
+    note:'거대한 조직의 부품이 되기보다, 자신만의 고유한 시각 언어로 세상과 소통하고자 독립 스튜디오를 지향하는 디자이너들이 늘고 있습니다. 치열한 디자인 생태계에서 대체 불가능한 자립 체력을 기르기 위해 주니어 시기에 반드시 갖춰야 할 태도와 역량은 무엇일까요? 오랜 시간 교육 현장과 실무 스튜디오를 아우르며 통찰을 쌓아온 디렉터의 이야기를 전합니다.',
+    qas:[
+      {q:'독립 스튜디오 환경이나 소규모 조직에서 주니어에게 가장 중요하게 요구되는 역량은 무엇인가요?',
+       a:`<p class="interview-p">저는 단연 <strong>'책임감'</strong>을 꼽습니다. 다만 여기서 말하는 책임감은 단순히 성실하게 출근하고 주어진 시간을 채우는 태도만을 뜻하지 않아요. 프로의 세계에서 책임감이란 <strong>'실질적으로 사용 가능한 결과물'</strong>을 완성도 있게 만들어내는 디자인 실력이 뒷받침될 때 비로소 증명됩니다.</p><p class="interview-p">또한, 주니어로서의 책임감은 자신의 부족한 점을 기꺼이 인정하고 이를 채우기 위해 끊임없이 공부하는 <strong>'성장의 태도'</strong>와도 직결됩니다. 지금 당장 완벽할 수는 없더라도, 무엇을 모르는지 명확히 인지하고 어떻게든 채워나가려는 태도가 진짜 책임감의 시작입니다.</p>`},
+      {q:'디자인 생태계의 경쟁이 무척 치열합니다. 독립적으로 자립하고 오래 버티려면 어떤 성향을 길러야 할까요?',
+       a:`<p class="interview-p">세 가지 감각이 필요합니다. 첫째는 <strong>'자기 안의 재미와 취향'</strong>을 붙잡는 힘입니다. 변화무쌍한 환경에서 지치지 않으려면 내가 왜 이 일을 좋아하는지 본질적인 이유를 알고 있어야 해요.</p><p class="interview-p">둘째는 변수를 받아들이는 <strong>'유연함'</strong>입니다. 실무에서는 일정, 조건, 클라이언트의 요청이 수시로 바뀝니다. 해보지 않은 일에 대한 두려움을 낮추고, 새로운 조건이 주어졌을 때 빠르게 흡수하고 대응하는 능력이 필수적입니다.</p><p class="interview-p">마지막으로 지엽적인 작업에 매몰되지 않고 <strong>'전체 판을 읽는 감각'</strong>이 필요합니다. 클라이언트가 이 요청을 왜 하는지, 이 프로젝트가 어떤 맥락 안에서 움직이는지 흐름을 볼 줄 알아야 하죠.</p>`},
+      {q:'학생들의 포트폴리오를 심사하실 때 가장 아쉽게 느껴지는 점과, 반대로 함께 동료로 일해보고 싶다는 확신을 주는 특징은 무엇인가요?',
+       a:`<p class="interview-p">감각적인 스타일이나 유행하는 표현을 흉내 내는 데 그친 작업을 볼 때 가장 아쉽습니다. 요즘 주니어들은 시각적 트렌드를 캐치하는 능력이 매우 뛰어납니다. 하지만 그 아름다운 표현이 <strong>'작업의 내용이나 맥락'</strong>과 밀도 있게 맞물려 있지 않으면 실무에서는 사용하기 어렵습니다.</p><p class="interview-p">반대로 확신을 주는 지원자는 스스로 호기심을 가지고 무언가를 깊게 파고들고 있다는 에너지가 느껴지는 사람입니다. 자신이 아직 배울 것이 많다는 것을 아는 겸손함, 그리고 그것을 채우기 위해 지속적으로 학습하는 단단함은 반드시 드러나게 되어 있습니다.</p>`},
+      {q:'소규모 독립 스튜디오나 에이전시의 초기 환경의 현실과, 이곳에서만 얻을 수 있는 디자이너로서의 가치는 무엇인가요?',
+       a:`<p class="interview-p">솔직히 말씀드리면, 모든 인프라가 갖춰진 대기업에 비해 초반 시스템이 치열하게 느껴질 수 있습니다. 소규모 스튜디오는 한 사람 한 사람의 역할이 절대적이기 때문에 주니어라 할지라도 실무에 투입되는 속도가 빠릅니다.</p><p class="interview-p">그럼에도 불구하고 이곳에서만 얻을 수 있는 가치는 <strong>'압축 성장'</strong>과 <strong>'전체론적 관점'</strong>입니다. 독립 스튜디오에서는 프로젝트의 킥오프부터 리서치, 기획, 최종 아웃풋 제작과 클라이언트 핸들링까지 전 과정을 직접 감당해야 합니다.</p><div class="blockquote">일이 어떻게 만들어지고, 어떻게 굴러가며, 어떻게 책임져야 하는지에 대한 판을 읽는 눈을 가장 빠르게 기를 수 있습니다. 이 경험은 향후 어디에도 종속되지 않고 자립할 수 있는 디자이너로 거듭나기 위한 가장 강력한 자산이 될 것입니다.</div>`}
+    ]
+  },
+  cj:{
+    full:'CJ/CGV',
+    sub:'트렌드의 최전선, 대기업 문화콘텐츠 기획자가 원하는 디자이너',
+    note:"수많은 대중의 눈과 귀를 사로잡는 문화콘텐츠 대기업의 중심에는 치열하게 판을 짜는 '기획자'들이 있습니다. 트렌드가 가장 빠르게 변하고 수많은 이해관계자가 얽혀 있는 이곳에서, 기획자들은 어떤 주니어와 함께 일하고 싶어 할까요? 완성된 스펙보다 강력한 성장 가능성, 그리고 결과물 이면의 '맥락'을 증명하는 포트폴리오의 비밀을 공개합니다.",
+    qas:[
+      {q:'구성원을 평가할 때 가장 중요하게 생각하는 역량은 무엇이며, 이것이 신입 채용 기준에는 어떻게 반영되나요?',
+       a:`<p class="interview-p">주니어 구성원을 평가할 때는 당장 눈앞에 보이는 단기 성과보다 <strong>'직무에 대한 깊은 이해도'</strong>와 <strong>'원만한 커뮤니케이션 역량'</strong>을 중요하게 봅니다.</p><p class="interview-p">최근 지원자들의 스펙은 이미 상향 평준화되어 있습니다. 따라서 이미 완성된 전문가를 찾기보다는, 조직과 유연하게 융화될 수 있는지, 자신의 생각을 논리적으로 정리하고 전달할 수 있는지를 면밀히 살핍니다. 무엇보다 <strong>'배우려는 태도와 성장 가능성'</strong>이 가장 강력한 채용 기준이 됩니다.</p>`},
+      {q:'이 조직의 업무 분위기에 가장 빠르게 적응하고 롱런하기 좋은 주니어의 성향은 무엇인가요?',
+       a:`<p class="interview-p">핵심은 <strong>'유연한 수용성'</strong>과 <strong>'자기 페이스 조절'</strong>입니다. 자신의 생각을 무조건 밀어붙이기보다 주변의 피드백을 유연하게 수용하고 빠르게 반영하는 사람이 좋은 평가를 받습니다. 콘텐츠 산업은 수많은 부서가 톱니바퀴처럼 맞물려 결과물을 내기 때문이죠.</p><p class="interview-p">반대로 개인 작업 중심의 방식을 고수하거나 협업 과정에서의 조율을 힘들어하는 경우에는 적응이 쉽지 않습니다. 아무리 개인 역량이 뛰어나도 다양한 조직의 사람들과 원만하게 소통하는 것을 스트레스로 받아들인다면 롱런이 어려울 수 있습니다.</p>`},
+      {q:'문화콘텐츠 대기업 특성상 실무에서 직면하게 되는 현실적인 어려움은 무엇인가요?',
+       a:`<p class="interview-p">대기업 조직 특성상 여러 단계의 협의 체계를 거쳐야 하므로 의사결정 속도가 다소 완만하게 느껴지거나, 예측할 수 없는 외부 변수에 의해 프로젝트의 방향성이 갑작스럽게 변경되기도 합니다.</p><p class="interview-p">하지만 이는 콘텐츠 산업을 지탱하는 본질적인 특성이기도 합니다. 이러한 변화를 답답해하기보다 대기업 시스템 안에서 배울 수 있는 <strong>리스크 관리 방식</strong>으로 수용하는 마인드셋이 필요합니다.</p>`},
+      {q:'어떤 포트폴리오를 가진 디자이너와 일하고 싶으신가요?',
+       a:`<p class="interview-p">저희는 단순한 결과물의 나열보다 <strong>'기획 의도와 문제 해결 과정'</strong>이 명확히 보이는 포트폴리오에 마음이 움직입니다. 어떤 문제를 발견했고, 그 문제를 해결하기 위해 어떤 의도로 디자인을 전개했으며, 그 과정에서 마주한 한계를 어떤 치열한 고민으로 극복했는지 설명할 수 있는 디자이너를 보면 당장 함께 일하고 싶다는 확신이 듭니다.</p><div class="blockquote">비주얼은 화려하지만 왜 이런 결과물이 나왔는지 맥락과 이유가 부재한 작업물은 아쉬움이 남습니다. 자신의 디자인 철학과 논리를 명확하게 전달할 수 있는 능력이 포트폴리오에서도 고스란히 묻어나야 합니다.</div>`},
+      {q:'대략적인 신입 초봉 범위와, 이 조직에서 얻을 수 있는 가장 큰 역량적 성장은 무엇인가요?',
+       a:`<p class="interview-p">대기업 계열 문화콘텐츠 기업의 신입 초봉은 대체로 국내 대기업 평균 수준인 <strong>4천만 원 초중반대</strong>로 형성되어 있습니다.</p><p class="interview-p">하지만 주니어 시기에는 연봉의 액수보다 <strong>'내가 어떤 환경에서 어떤 경험의 밀도를 쌓을 수 있는가'</strong>가 커리어의 성패를 가릅니다. 수많은 외부 파트너들과 협업하며 대형 프로젝트를 기획하고 실행해 보는 경험, 그 과정에서 축적되는 프로젝트 운영 역량이야말로 시장에서 몸값을 높일 수 있는 가장 강력한 무기가 될 것입니다.</p>`}
+    ]
+  },
+  house:{
+    full:'오늘의집 (Bucketplace)',
+    sub:'플랫폼 스타트업에서 생존하는 법 : 논리력과 주도성',
+    note:"대한민국 주거 문화를 바꾼 IT 플랫폼 스타트업 '오늘의집'. 날것의 문제를 발견하고 이를 빠르게 해결해 나가며 서비스를 키워가는 스타트업 생태계에서 주니어 디자이너가 살아남기 위한 필수 조건은 무엇일까요? 철저한 실전 중심의 환경 속에서 스스로 가치를 증명해 내는 인재들의 특징을 들여다봅니다.",
+    qas:[
+      {q:'오늘의집과 같은 IT 플랫폼 스타트업에서 주니어 디자이너에게 요구하는 가장 핵심적인 역량은 무엇인가요?',
+       a:`<p class="interview-p">가장 중요한 덕목은 <strong>'비판적 사고를 바탕으로 한 문제해결 능력'</strong>입니다. 단순히 심미적으로 아름다운 UI를 그리는 기본 역량을 넘어, 현재 우리 프로젝트의 목적과 비즈니스 상태를 정확히 진단하고 '우리가 진짜 해결해야 하는 핵심 문제가 무엇인가'를 논리적으로 정의할 수 있어야 합니다.</p><p class="interview-p">스타트업은 철저히 실전 지향적입니다. 단순히 포트폴리오용으로 다듬어진 작업보다 동아리, 창업, 사이드 프로젝트 등 형태와 관계없이 실제 서비스를 론칭해 유저를 획득하고, 그 데이터를 바탕으로 이터레이션을 돌려보며 얻은 <strong>'레슨런(Lesson Learned)'</strong>이 있는 주니어를 선호합니다.</p>`},
+      {q:'스타트업 특유의 자율적인 분위기 속에서, 유독 적응을 힘들어하는 주니어들의 성향이 있다면 무엇인가요?',
+       a:`<p class="interview-p">소극적인 태도와 잘 보여야 한다는 심리적 압박감입니다. 스타트업은 누군가 매뉴얼을 쥐여주고 업무를 일일이 가르쳐주지 않습니다. 내게 무엇이 필요한지 스스로 진단하고, 주변 동료들에게 적극적으로 질문하고 도움을 요청해야 하죠.</p><p class="interview-p">인턴이나 주니어 중 간혹 <strong>'내가 완벽하게 잘하는 모습만 보여야 한다'</strong>는 부담감에 갇혀 방어적인 태도를 취하는 경우가 있습니다. 스타트업에서는 내 판단력과 솔루션이 틀릴 수 있음을 인정하는 유연함이 필요합니다.</p>`},
+      {q:'현실적으로 스타트업 실무 환경에서 리더십이나 조직 구조로 인해 겪을 수 있는 변수는 무엇이 있을까요?',
+       a:`<p class="interview-p">대기업에 비해 조직 구조가 유연하고 소규모인 만큼, <strong>'리더십의 방향성과 정체성'</strong>이 구성원의 몰입도와 업무 진행에 막대한 영향을 미칩니다. 특히 대표나 의사결정권자의 판단 기준이 명확하지 않으면 실무진의 작업이 홀드되거나 공중에 뜨는 경우가 발생하기 쉽죠.</p><div class="blockquote">대학교 동아리 같은 수평적이고 친근한 분위기가 장점인 반면, 리더 개인의 인간성과 역량에 따른 변동성이 더 크게 다가오는 환경이기도 합니다.</div>`},
+      {q:'스타트업 생태계의 처우와, 이곳에서만 얻을 수 있는 디자이너로서의 최고의 보상은 무엇인가요?',
+       a:`<p class="interview-p">신입 기준 초봉은 대략 <strong>4,000만 원 안팎</strong>으로 형성되는 편이며, 이는 인프라가 갖춰진 대기업에 비하면 상대적으로 낮게 느껴질 수 있습니다.</p><p class="interview-p">하지만 보상의 본질은 <strong>'압도적인 프로젝트 리딩 경험'</strong>에 있습니다. 파트를 쪼개어 일하는 스페셜리스트가 아니라, 서비스 전체를 조망하는 제너럴리스트(Generalist)로 성장할 수 있죠. "이 서비스의 이 기능은 내가 주도해서 만들었다"고 세상에 당당히 말할 수 있는 밀도 높은 포트폴리오는 스타트업 디자이너만이 누릴 수 있는 최고의 자산입니다.</p>`}
+    ]
+  },
+  samsung:{
+    full:'삼성 (Samsung) | 대기업 인하우스 편',
+    sub:'거대한 조직 속에서 대규모 프로젝트를 움직이는 디자이너',
+    note:'선망의 대상인 글로벌 제조 IT 대기업, 삼성전자 인하우스 디자인 조직. 전 세계 수억 명의 일상에 영향을 미치는 대규모 프로젝트의 이면에는 거대한 시스템을 조율하고 통과시키는 독특한 실무 환경이 존재합니다. 대기업 디자인 조직에서 성장하는 주니어들의 이야기와, 화려한 스펙 너머의 현실을 솔직하게 공개합니다.',
+    qas:[
+      {q:'글로벌 대기업 인하우스 조직에서 주니어 디자이너에게 요구하는 가장 핵심 역량은 무엇인가요?',
+       a:`<p class="interview-p">솔직하게 말씀드리면, 무언가를 순수하게 창작하는 능력보다 <strong>'설득력 있는 보고 자료를 만들고 이를 커뮤니케이션하는 역량'</strong>이 실무의 70% 이상을 차지합니다. 대기업의 의사결정권자는 최종 사용자가 아니라 임원진인 경우가 많기 때문입니다.</p><p class="interview-p">경영진의 니즈와 상황, 조직 내 역학 관계를 영리하게 파악하고, 격식과 규칙에 맞춰 논리를 명확하게 정리하여 통과 확률을 높이는 역량이 매우 중요합니다. 주니어가 대기업에서 빠르게 인정받는 노선은 두 가지입니다. <strong>조직의 흐름을 빠르게 읽고 서포트하는 영리함</strong>을 갖추거나, <strong>압도적이고 뛰어난 비주얼 스킬</strong>을 증명해 내는 것입니다.</p>`},
+      {q:'대기업 채용 심사 시 눈여겨보는 스펙이나 포트폴리오의 특징이 있나요?',
+       a:`<p class="interview-p">대기업 인하우스 신입 채용은 실무 역량이 검증된 루트를 통해 이루어지는 경우가 많습니다. 에이전시에서 탄탄한 실무를 다져온 경력자이거나, <strong>'삼성디자인멤버십'</strong> 등 기업 연계 프로그램을 거친 지원자들의 합격 비율이 높죠.</p><p class="interview-p">포트폴리오의 파격함보다는 <strong>정돈된 완성도</strong>를 봅니다. 더불어 글로벌 비즈니스를 영위하는 만큼, 실무진 및 해외 파트너와 막힘없이 대화할 수 있는 <strong>유창한 영어 회화 능력</strong>이 합격을 가르는 중요한 요소가 됩니다.</p>`},
+      {q:'거대 조직인 만큼 내부 구성원 간의 관계나 시스템에서 오는 현실적인 어려움은 어떠한가요?',
+       a:`<p class="interview-p">대기업은 연령대와 가치관이 매우 다양한 구성원들이 섞여 있어 기본적인 에티켓과 조심성이 늘 요구됩니다. 인사 평가나 진급 시즌의 주기에 따라 조직의 분위기가 크게 출렁이기도 하죠.</p><div class="blockquote">대기업의 시스템은 개인이 하나의 큰 조직 안에서 각자의 역할을 수행하도록 최적화되어 있습니다. 직무 순환이나 부서 개편 등 조직의 거시적인 결정에 따라 나의 커리어 트랙이나 업무가 재배정되는 상황이 발생할 수도 있습니다.</div><p class="interview-p">개인의 주도권보다 <strong>시스템의 흐름을 수용하는 마인드셋</strong>이 필요합니다.</p>`},
+      {q:'그럼에도 불구하고 대기업 인하우스가 줄 수 있는 확실한 장점은 무엇인가요?',
+       a:`<p class="interview-p">압도적인 처우와 스케일입니다. <strong>기본급 6,000만 원 선에서 시작</strong>해 경영 성과급에 따라 연봉의 변동 폭이 크며, 대략 <strong>6,000~8,000만 원 선의 안정적인 초기 소득</strong>을 기대할 수 있습니다. 훌륭한 복지 인프라는 물론, 브랜드 인지도의 가치도 무시할 수 없죠.</p><p class="interview-p">무엇보다 전 세계 수억 명이 사용하는 <strong>대규모 프로젝트</strong>를 경험해 볼 수 있다는 것은 대기업 디자이너만의 고유한 특권입니다. 탄탄한 회사 시스템 안에서 일과 가정을 균형 있게 꾸려나가며 안정적인 커리어를 구축하고 싶은 디자이너에게는 최고의 환경입니다.</p>`}
+    ]
+  }
+};
+
+// ───────────────────────────────────────────
+// STATE
+// ───────────────────────────────────────────
+const S = {tab:'home',ivGuild:'studio',qi:0,scores:{studio:0,cj:0,house:0,samsung:0},done:false,sel:null};
+
+// ───────────────────────────────────────────
+// NAV
+// ───────────────────────────────────────────
+function go(tab){
+  S.tab=tab;
+  document.querySelectorAll('.nav-btn').forEach(b=>{
+    b.classList.toggle('active', b.dataset.tab===tab);
+  });
+  window.scrollTo({top:0,behavior:'smooth'});
+  renderScreen();
+}
+function setIv(g){S.ivGuild=g;renderScreen();}
+
+// ───────────────────────────────────────────
+// SCREEN: HOME
+// ───────────────────────────────────────────
+function homeHTML(){
+  const cards = GKEYS.map(k=>{
+    const g=G[k];
+    return `<div style="background:#fff;border:1.5px solid #F3F4F6;border-radius:20px;padding:28px" class="card-hover" onclick="go('eco')">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px">
+        <span style="font-size:28px">${g.icon}</span>
+        <span style="font-size:11px;font-weight:700;color:${g.hex};background:${g.hex}18;padding:3px 10px;border-radius:100px">${g.tag}</span>
+      </div>
+      <div style="font-weight:800;font-size:17px;margin-bottom:8px;letter-spacing:-.03em">${g.name}</div>
+      <div style="font-size:13px;color:#9CA3AF;line-height:1.65;white-space:pre-line">${g.desc}</div>
+    </div>`;
+  }).join('');
+
+  return `<div style="max-width:1200px;margin:0 auto;padding:0 60px 100px">
+
+    <!-- HERO: 2-column -->
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;padding:96px 0 80px">
+      <!-- LEFT: hero text -->
+      <div>
+        <div style="display:inline-flex;align-items:center;gap:8px;background:#F0F6FF;border-radius:100px;padding:7px 16px;margin-bottom:32px">
+          <span style="font-size:13px">📋</span>
+          <span style="font-size:12px;font-weight:700;color:#0064FF;letter-spacing:.05em">DESIGNER CAREER GUIDE</span>
+        </div>
+        <h1 style="font-size:clamp(40px,3.6vw,60px);font-weight:900;line-height:1.13;letter-spacing:-.04em;margin-bottom:24px">
+          디자이너 성향별<br><span style="color:#0064FF">커리어 맞춤 가이드</span>
+        </h1>
+        <p style="font-size:18px;color:#6B7280;line-height:1.8;margin-bottom:44px;max-width:440px">
+          4개 직군의 실무 환경과 선배 디자이너들의 인터뷰를 바탕으로 나에게 맞는 커리어 방향을 찾아드립니다.
+        </p>
+        <button class="btn-primary" onclick="go('quiz')">
+          내 성향에 맞는 직군 찾기
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </button>
+      </div>
+      <!-- RIGHT: 2×2 cards -->
+      <div>
+        <p style="font-size:12px;font-weight:700;color:#9CA3AF;letter-spacing:.08em;margin-bottom:16px">4개 직군 미리보기</p>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">${cards}</div>
+      </div>
+    </div>
+
+    <!-- STATS + HOW-TO: 2-column row -->
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;align-items:stretch">
+      <!-- Stats -->
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:1px;background:#F3F4F6;border-radius:20px;overflow:hidden">
+        ${[['4','디자인 직군'],['10','성향 질문'],['100%','실무 기반 인터뷰']].map(([n,l])=>`
+          <div style="background:#fff;padding:28px 20px;text-align:center">
+            <div style="font-size:32px;font-weight:900;color:#0064FF;letter-spacing:-.04em;margin-bottom:6px">${n}</div>
+            <div style="font-size:12px;color:#9CA3AF;line-height:1.5">${l}</div>
+          </div>`).join('')}
+      </div>
+      <!-- How-to -->
+      <div style="background:#F9FAFB;border-radius:20px;padding:32px 36px">
+        <p style="font-size:12px;font-weight:700;color:#9CA3AF;letter-spacing:.08em;margin-bottom:22px">이 가이드 사용법</p>
+        <div style="display:flex;flex-direction:column;gap:18px">
+          ${[
+            ['직군 비교 탭','4개 직군의 요구 역량, 연봉, 성향을 한눈에 비교합니다.'],
+            ['인터뷰 탭','각 직군 선배들의 실무 인터뷰를 아티클 형식으로 읽습니다.'],
+            ['성향 테스트 탭','10문항으로 나에게 가장 잘 맞는 직군을 찾아냅니다.'],
+          ].map(([t,d],i)=>`
+            <div style="display:flex;gap:16px;align-items:flex-start">
+              <div style="width:34px;height:34px;border-radius:10px;background:#0064FF;display:flex;align-items:center;justify-content:center;flex-shrink:0">
+                <span style="font-size:12px;font-weight:800;color:#fff">0${i+1}</span>
+              </div>
+              <div>
+                <div style="font-size:14px;font-weight:700;color:#111827;margin-bottom:3px">${t}</div>
+                <div style="font-size:13px;color:#9CA3AF;line-height:1.65">${d}</div>
+              </div>
+            </div>`).join('')}
+        </div>
+      </div>
+    </div>
+
+  </div>`;
+}
+
+// ───────────────────────────────────────────
+// SCREEN: ECOSYSTEM
+// ───────────────────────────────────────────
+function ecoHTML(){
+  // 헤더 행: 첫 열(빈칸) + 4개 직군 헤더 — eco-row 동일 그리드 사용
+  const headerRow = `<div class="eco-row" style="background:#FAFAFA;border-bottom:2px solid #E5E7EB">
+    <div class="eco-attr" style="background:#FAFAFA"></div>
+    ${GKEYS.map(k=>{
+      const g=G[k];
+      return `<div class="eco-cell" style="text-align:center;padding:16px 12px;background:#FAFAFA">
+        <div style="display:flex;flex-direction:column;align-items:center;gap:5px">
+          <span style="font-size:22px">${g.icon}</span>
+          <span style="font-size:12px;font-weight:800;color:${g.hex};letter-spacing:-.01em">${g.name}</span>
+          <span style="font-size:10px;color:#9CA3AF;font-weight:500">${g.tag}</span>
+        </div>
+      </div>`;
+    }).join('')}
+  </div>`;
+
+  const dataRows = ECO.map((row,ri)=>{
+    const cells = GKEYS.map(k=>{
+      const items=row[k];
+      return `<div class="eco-cell" style="background:${ri%2===0?'#fff':'#FAFAFA'}">
+        ${items.map((it,ii)=>`<span style="display:block;color:${ii===0?'#111827':'#9CA3AF'};font-weight:${ii===0?600:400};line-height:1.6;margin-bottom:2px;font-size:13px">${it}</span>`).join('')}
+      </div>`;
+    }).join('');
+    return `<div class="eco-row" style="border-bottom:${ri<ECO.length-1?'1px solid #F3F4F6':'none'}">
+      <div class="eco-attr" style="background:${ri%2===0?'#fff':'#FAFAFA'}">
+        <span style="font-size:12px;font-weight:700;color:#9CA3AF;padding-top:2px">${row.attr}</span>
+      </div>
+      ${cells}
+    </div>`;
+  }).join('');
+
+  return `<div style="max-width:1200px;margin:0 auto;padding:0 60px 100px">
+    <div style="padding-top:72px;padding-bottom:48px">
+      <p style="font-size:12px;font-weight:700;color:#9CA3AF;letter-spacing:.08em;margin-bottom:14px">CAREER COMPARISON</p>
+      <h2 style="font-size:40px;font-weight:900;letter-spacing:-.04em;margin-bottom:10px">4개 직군 비교 분석</h2>
+      <p style="font-size:16px;color:#9CA3AF">4개 직군의 특성과 실무 환경을 한눈에 비교해 보세요.</p>
+    </div>
+    <div class="eco-wrap">
+      <div class="eco-table">${headerRow}${dataRows}</div>
+    </div>
+    <div style="margin-top:24px;display:flex;gap:12px;align-items:flex-start;padding:20px 24px;background:#F0F6FF;border-radius:16px">
+      <span style="font-size:15px;flex-shrink:0;margin-top:1px">💡</span>
+      <p style="font-size:14px;color:#374151;line-height:1.7">초봉은 시점과 개인 역량에 따라 달라질 수 있습니다. 숫자보다 <strong style="color:#0064FF">'어떤 경험의 밀도를 쌓을 수 있는가'</strong>를 기준으로 선택을 권장합니다.</p>
+    </div>
+  </div>`;
+}
+
+// ───────────────────────────────────────────
+// SCREEN: INTERVIEW
+// ───────────────────────────────────────────
+function interviewHTML(){
+  const sidebar = GKEYS.map(k=>{
+    const g=G[k]; const a=S.ivGuild===k;
+    return `<button class="iv-tab" onclick="setIv('${k}')"
+      style="border-left-color:${a?g.hex:'transparent'};background:${a?g.hex+'12':'transparent'};color:${a?g.hex:'#6B7280'};font-weight:${a?700:500}">
+      <span style="font-size:20px">${g.icon}</span>
+      <div style="flex:1;min-width:0">
+        <div style="font-size:14px;font-weight:${a?700:500};color:${a?g.hex:'#374151'};line-height:1.3">${g.name}</div>
+        <div style="font-size:11px;color:#9CA3AF;margin-top:2px;line-height:1.3">${g.tag}</div>
+      </div>
+    </button>`;
+  }).join('');
+
+  const iv=IV[S.ivGuild]; const g=G[S.ivGuild];
+
+  // 답변 중간의 blockquote 추출 → 일반 문단으로 전환, 별도 수집
+  const summaries=[];
+  const qas = iv.qas.map((qa,i)=>{
+    const ans=qa.a.replace(/<div class="blockquote">([\s\S]*?)<\/div>/g,(_,txt)=>{
+      summaries.push(txt.trim());
+      return `<p class="interview-p">${txt.trim()}</p>`;
+    });
+    return `<div style="margin-bottom:52px">
+      <div style="display:flex;gap:14px;margin-bottom:20px;align-items:flex-start">
+        <div style="width:30px;height:30px;border-radius:9px;background:${g.hex};display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px">
+          <span style="font-size:11px;font-weight:800;color:#fff">Q${i+1}</span>
+        </div>
+        <h4 style="font-size:17px;font-weight:800;line-height:1.55;letter-spacing:-.02em">${qa.q}</h4>
+      </div>
+      <div style="padding-left:44px">${ans}</div>
+    </div>`;
+  }).join('');
+
+  // 인터뷰 말미 핵심 메시지 섹션
+  const summarySection = summaries.length ? `
+    <div style="margin-top:56px;padding-top:48px;border-top:2px solid #F3F4F6">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:20px">
+        <div style="width:4px;height:20px;background:${g.hex};border-radius:2px"></div>
+        <p style="font-size:13px;font-weight:700;color:${g.hex};letter-spacing:.06em">핵심 메시지</p>
+      </div>
+      ${summaries.map(s=>`<div class="blockquote" style="margin-bottom:12px">${s}</div>`).join('')}
+    </div>` : '';
+
+  return `<div style="max-width:1200px;margin:0 auto;padding:0 60px 100px">
+    <div style="padding-top:72px;padding-bottom:48px">
+      <p style="font-size:12px;font-weight:700;color:#9CA3AF;letter-spacing:.08em;margin-bottom:14px">CAREER INTERVIEW</p>
+      <h2 style="font-size:40px;font-weight:900;letter-spacing:-.04em;margin-bottom:10px">선배 디자이너 인터뷰</h2>
+      <p style="font-size:16px;color:#9CA3AF">각 직군에서 직접 일하고 있는 디자이너들의 솔직한 이야기.</p>
+    </div>
+
+    <!-- 2-column: sidebar + content -->
+    <div style="display:grid;grid-template-columns:228px 1fr;gap:60px;align-items:flex-start">
+
+      <!-- SIDEBAR -->
+      <div style="position:sticky;top:84px">
+        <p style="font-size:11px;font-weight:700;color:#9CA3AF;letter-spacing:.08em;margin-bottom:12px;padding-left:4px">직군 선택</p>
+        <div style="display:flex;flex-direction:column;gap:4px">${sidebar}</div>
+      </div>
+
+      <!-- CONTENT -->
+      <div>
+        <div style="margin-bottom:40px;padding-bottom:40px;border-bottom:1px solid #F3F4F6">
+          <div style="display:inline-flex;align-items:center;gap:8px;background:${g.hex}12;border-radius:100px;padding:7px 16px;margin-bottom:22px">
+            <span>${g.icon}</span>
+            <span style="font-size:12px;font-weight:700;color:${g.hex}">${g.tag}</span>
+          </div>
+          <h3 style="font-size:28px;font-weight:900;letter-spacing:-.04em;margin-bottom:8px;line-height:1.3">${iv.full}</h3>
+          <p style="font-size:16px;color:#6B7280;font-weight:500;margin-bottom:24px">${iv.sub}</p>
+          <div style="background:#F9FAFB;border-radius:16px;padding:24px 28px;border-left:3px solid ${g.hex}">
+            <p style="font-size:11px;font-weight:700;color:#9CA3AF;letter-spacing:.08em;margin-bottom:10px">EDITOR'S NOTE</p>
+            <p style="font-size:14px;color:#6B7280;line-height:1.9;font-style:italic">${iv.note}</p>
+          </div>
+        </div>
+        ${qas}
+        ${summarySection}
+      </div>
+
+    </div>
+  </div>`;
+}
+
+// ───────────────────────────────────────────
+// SCREEN: QUIZ
+// ───────────────────────────────────────────
+function quizPickOption(i){
+  if(S.sel!==null) return;
+  S.sel=i;
+  const opt=QUIZ[S.qi].opts[i];
+  Object.entries(opt.s).forEach(([k,v])=>{S.scores[k]+=v;});
+  renderScreen();
+  setTimeout(()=>{
+    if(S.qi+1>=QUIZ.length){S.done=true;}
+    else{S.qi++;S.sel=null;}
+    renderScreen();
+  },460);
+}
+function quizReset(){
+  S.qi=0;S.scores={studio:0,cj:0,house:0,samsung:0};S.done=false;S.sel=null;
+  renderScreen();
+}
+
+function quizHTML(){
+  if(S.done) return quizResultHTML();
+  const q=QUIZ[S.qi];
+  const pct=Math.round((S.qi/QUIZ.length)*100);
+  const opts=q.opts.map((opt,i)=>{
+    const isSel=S.sel===i; const isDim=S.sel!==null&&!isSel;
+    return `<button class="opt-btn${isSel?' selected':''}${isDim?' dimmed':''}" onclick="quizPickOption(${i})" ${S.sel!==null?'disabled':''}>
+      <div class="opt-label">${i===0?'A':'B'}</div>
+      <span style="font-size:15px;color:${isSel?'#111827':'#374151'};font-weight:${isSel?600:400};line-height:1.6">${opt.t}</span>
+    </button>`;
+  }).join('');
+
+  return `<div style="max-width:860px;margin:0 auto;padding:0 60px 100px">
+    <div style="padding-top:72px;padding-bottom:44px;text-align:center">
+      <p style="font-size:12px;font-weight:700;color:#9CA3AF;letter-spacing:.08em;margin-bottom:14px">PERSONALITY TEST</p>
+      <h2 style="font-size:40px;font-weight:900;letter-spacing:-.04em;margin-bottom:10px">성향 테스트</h2>
+      <p style="font-size:16px;color:#9CA3AF">10개 질문으로 나에게 맞는 직군을 찾아드립니다.</p>
+    </div>
+    <div style="margin-bottom:36px">
+      <div style="display:flex;justify-content:space-between;margin-bottom:12px">
+        <span style="font-size:14px;font-weight:600;color:#6B7280">질문 ${S.qi+1} / ${QUIZ.length}</span>
+        <span style="font-size:14px;font-weight:700;color:#0064FF">${pct}%</span>
+      </div>
+      <div class="progress-track"><div class="progress-fill" style="width:${pct}%"></div></div>
+    </div>
+    <div style="background:#fff;border:1.5px solid #F3F4F6;border-radius:24px;padding:44px 48px;margin-bottom:20px">
+      <div style="width:40px;height:40px;border-radius:12px;background:#0064FF;display:flex;align-items:center;justify-content:center;margin-bottom:24px">
+        <span style="font-size:14px;font-weight:800;color:#fff">Q${S.qi+1}</span>
+      </div>
+      <h3 style="font-size:22px;font-weight:800;line-height:1.55;letter-spacing:-.03em">${q.q}</h3>
+    </div>
+    <div class="opts-grid">${opts}</div>
+  </div>`;
+}
+
+function quizResultHTML(){
+  const total=Object.values(S.scores).reduce((a,b)=>a+b,0)||1;
+  const pcts={};
+  GKEYS.forEach(k=>{pcts[k]=Math.round((S.scores[k]/total)*100);});
+  const sorted=[...GKEYS].sort((a,b)=>S.scores[b]-S.scores[a]);
+  const winner=sorted[0]; const gw=G[winner];
+
+  const bars=sorted.map((k,i)=>{
+    const g=G[k]; const isW=k===winner;
+    return `<div style="margin-bottom:16px">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+        <div style="display:flex;align-items:center;gap:8px">
+          <span style="font-size:16px">${g.icon}</span>
+          <span style="font-size:14px;font-weight:${isW?800:600};color:${isW?'#111827':'#6B7280'}">${g.name}</span>
+          ${isW?`<span style="font-size:11px;font-weight:700;color:#0064FF;background:#EEF5FF;padding:2px 8px;border-radius:100px">가장 적합</span>`:''}
+        </div>
+        <span style="font-size:14px;font-weight:700;color:${isW?g.hex:'#9CA3AF'}">${pcts[k]}%</span>
+      </div>
+      <div style="height:8px;background:#F3F4F6;border-radius:100px;overflow:hidden">
+        <div class="bar-fill" id="bar-${k}" style="width:0;background:${isW?g.hex:'#D1D5DB'}"></div>
+      </div>
+    </div>`;
+  }).join('');
+
+  const tips=gw.tips.map(t=>`
+    <div style="display:flex;gap:10px;align-items:flex-start">
+      <div style="width:20px;height:20px;border-radius:6px;background:${gw.hex};display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px">
+        <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+      </div>
+      <span style="font-size:13px;color:#374151;line-height:1.6">${t}</span>
+    </div>`).join('');
+
+  return `<div style="max-width:1100px;margin:0 auto;padding:0 60px 100px">
+    <div style="padding-top:72px;padding-bottom:48px">
+      <p style="font-size:12px;font-weight:700;color:#9CA3AF;letter-spacing:.08em;margin-bottom:14px">TEST RESULT</p>
+      <h2 style="font-size:40px;font-weight:900;letter-spacing:-.04em">성향 분석 결과</h2>
+    </div>
+
+    <!-- 2-column: winner card + bar chart -->
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:28px;align-items:stretch;margin-bottom:28px">
+
+      <!-- LEFT: winner card -->
+      <div style="background:linear-gradient(145deg,${gw.hex}16,${gw.hex}06);border:2px solid ${gw.hex}24;border-radius:24px;padding:44px 40px;display:flex;flex-direction:column">
+        <div style="font-size:56px;margin-bottom:20px">${gw.icon}</div>
+        <p style="font-size:11px;font-weight:700;color:${gw.hex};letter-spacing:.08em;margin-bottom:10px">가장 잘 맞는 직군</p>
+        <h3 style="font-size:30px;font-weight:900;letter-spacing:-.04em;margin-bottom:4px">${gw.name}</h3>
+        <p style="font-size:14px;color:${gw.hex};font-weight:700;margin-bottom:20px">${gw.tag}</p>
+        <p style="font-size:14px;color:#6B7280;line-height:1.85;margin-bottom:28px;flex:1">${gw.result}</p>
+        <div style="background:#fff;border-radius:16px;padding:22px 26px">
+          <p style="font-size:11px;font-weight:700;color:#9CA3AF;letter-spacing:.06em;margin-bottom:14px">커리어 준비 체크리스트</p>
+          <div style="display:flex;flex-direction:column;gap:12px">${tips}</div>
+        </div>
+      </div>
+
+      <!-- RIGHT: bar chart -->
+      <div style="background:#fff;border-radius:24px;padding:44px 40px;border:1px solid #F3F4F6;display:flex;flex-direction:column;justify-content:center">
+        <p style="font-size:12px;font-weight:700;color:#9CA3AF;letter-spacing:.08em;margin-bottom:28px">직군 적합도 분석</p>
+        ${bars}
+      </div>
+
+    </div>
+
+    <button onclick="quizReset()" style="display:flex;align-items:center;justify-content:center;gap:8px;width:100%;padding:18px;border-radius:16px;background:#F9FAFB;border:1.5px solid #E5E7EB;font-size:15px;font-weight:700;color:#6B7280;cursor:pointer;font-family:inherit">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M1 4v6h6M23 20v-6h-6"/><path d="M20.49 9A9 9 0 0 0 5.64 5.64L1 10m22 4l-4.64 4.36A9 9 0 0 1 3.51 15"/></svg>
+      다시 테스트하기
+    </button>
+  </div>`;
+}
+
+// ───────────────────────────────────────────
+// RENDER
+// ───────────────────────────────────────────
+function renderScreen(){
+  const map={home:homeHTML,eco:ecoHTML,interview:interviewHTML,quiz:quizHTML};
+  ['home','eco','interview','quiz'].forEach(t=>{
+    document.getElementById('s-'+t).classList.remove('on');
+  });
+  const el=document.getElementById('s-'+S.tab);
+  el.innerHTML=map[S.tab]();
+  el.classList.add('on');
+
+  if(S.done){
+    requestAnimationFrame(()=>{
+      const total=Object.values(S.scores).reduce((a,b)=>a+b,0)||1;
+      GKEYS.forEach(k=>{
+        const bar=document.getElementById('bar-'+k);
+        if(bar){const p=Math.round((S.scores[k]/total)*100);setTimeout(()=>{bar.style.width=p+'%';},60);}
+      });
+    });
+  }
+}
+
+go('home');
+</script>
+</body>
+</html>
